@@ -1,0 +1,29 @@
+{
+    "status": [
+        {
+            "region": "hkg",
+            "status": "degraded",
+            "message": "There's an ongoing DDoS attack targeting AperNet HKG's network. Users may experience higher than usual packet loss on inbound. Traffic on common amplification attack source ports (NTP, CLDAP, SSDP, etc.) may be dropped. Inbound ICMP requests are filereted."
+        },
+        {
+            "region": "sjc",
+            "status": "degraded",
+            "message": "There's an ongoing DDoS attack targeting AperNet SJC's network. Users may experience higher than usual packet loss on inbound."
+        },
+        {
+            "region": "mel",
+            "status": "operational",
+            "message": "All systems operational."
+        },
+        {
+            "region": "nrt",
+            "status": "operational",
+            "message": "All systems operational."
+        },
+        {
+            "region": "sgp",
+            "status": "operational",
+            "message": "All systems operational."
+        }
+    ]
+}

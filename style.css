@@ -1,0 +1,117 @@
+html {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f3f3f3;
+}
+
+body {
+    color: #333;
+    padding: 0;
+    margin: 0;
+    min-height: 100%;
+    font-family: 'Source Sans Pro', sans-serif;
+    max-width: 1200px;
+}
+
+.code, .content {
+    float: left;
+}
+
+.page-title {
+    font-size: 32px;
+    color: #333;
+}
+
+.content {
+    margin-top: 10px;
+    width: calc(100% - 20px);
+}
+
+.region-block {
+    width: 100%;
+    background-color: #fff;
+    border: solid #aaa 1px;
+    border-radius: 2px;
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.25);
+    padding: 10px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.region-block .block-header {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.region-block .block-header .region {
+    text-align: center;
+    font-size: 24px;
+    width: 80px;
+    line-height: 50px;
+    color: #555;
+    display: inline-block;
+    font-family: 'Source Code Pro', monospace;
+    text-transform: lowercase;
+}
+
+.region-block .block-header .status {
+    font-size: 24px;
+    margin-left: 10px;
+    line-height: 50px;
+    display: inline-block;
+}
+
+.region-block .block-header .region.status-degraded {
+    background-color: rgb(255, 217, 0);
+}
+
+.region-block .block-header .status.status-degraded:after {
+    position: absolute;
+    right: 15px;
+    content: 'ヾ(>Д<;)))';
+    color: #ccc;
+    font-size: 35px;
+}
+
+.region-block .block-header .region.status-operational {
+    background-color: rgb(0, 255, 136);
+}
+
+.region-block .block-header .status.status-operational:after {
+    position: absolute;
+    right: 15px;
+    content: '(´∀｀)';
+    color: #ccc;
+    font-size: 35px;
+}
+
+.region-block .block-header .region.status-down {
+    background-color: rgb(255, 92, 42);
+}
+
+.region-block .block-header .status.status-down:after {
+    position: absolute;
+    right: 15px;
+    content: '(´Д｀。)';
+    color: #ccc;
+    font-size: 35px;
+}
+
+.region-block .message {
+    font-size: 18px;
+}
+
+.container {
+    vertical-align: middle;
+    padding: 20px;
+}
+
+.container:before {
+    content: 'AperNet, LLC';
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    padding: .45em;
+    border-left: #555 solid .5em;
+}
