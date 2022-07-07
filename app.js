@@ -39,6 +39,6 @@
         render(res.status);
     });
 
-    xhr.open('GET', `status.json?v=${Date.now()}`);
+    xhr.open('GET', `https://status-api.apernet.io/status.json?v=${Date.now()}`);
     xhr.send();
 })();
