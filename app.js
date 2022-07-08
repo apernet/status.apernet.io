@@ -1,44 +1,110 @@
 (function () {
-    const content = document.getElementById('content');
+    const statusList = document.getElementById('status-list');
+    const newsList = document.getElementById('news-list');
+    const loadMore = document.getElementById('load-more');
 
-    const render = function(status) {
-        const els = [];
+    const formatTime = function(timeStr) {
+        return new Date(timeStr).toLocaleString('en-US');
+    };
 
-        status.forEach(s => {
-            const regionBlock = document.createElement('div');
-            const blockHeader = document.createElement('div');
-            const region = document.createElement('div');
-            const status = document.createElement('div');
-            const message = document.createElement('div');
+    const render = function(res) {
+        const sEls = [], nEls = [];
 
-            regionBlock.append(blockHeader, message);
-            blockHeader.append(region, status);
+        if (res.status) {
+            res.status.forEach(s => {
+                const regionBlock = document.createElement('div');
+                const blockHeader = document.createElement('div');
+                const region = document.createElement('div');
+                const status = document.createElement('div');
+                const message = document.createElement('div');
 
-            regionBlock.classList.add('region-block');
-            blockHeader.classList.add('block-header');
-            region.classList.add('region', `status-${s.status}`);
-            status.classList.add('status', `status-${s.status}`);
-            message.classList.add('message');
+                regionBlock.append(blockHeader, message);
+                blockHeader.append(region, status);
 
-            const statusText = s.status.charAt(0).toUpperCase() + s.status.slice(1);
+                regionBlock.classList.add('region-block');
+                blockHeader.classList.add('block-header');
+                region.classList.add('region', `status-${s.status}`);
+                status.classList.add('status', `status-${s.status}`);
+                message.classList.add('message');
 
-            region.innerText = s.region;
-            status.innerText = statusText;
-            message.innerHTML = s.message;
+                const statusText = s.status.charAt(0).toUpperCase() + s.status.slice(1);
 
-            els.push(regionBlock);
-        });
+                region.innerText = s.region;
+                status.innerText = statusText;
+                if (s.message) {
+                    const p = document.createElement('p');
+                    p.innerText = s.message;
+                    message.append(p);
+                } else if (s.messages) {
+                    s.messages.forEach(m => {
+                        const p = document.createElement('p');
+                        p.innerText = m;
+                        message.append(p);
+                    });              
+                }
 
-        content.append(...els);
+                sEls.push(regionBlock);
+            });
+        }
+
+        if (res.news) {
+            res.news.forEach(n => {
+                const newsBlock = document.createElement('div');
+                const blockHeader = document.createElement('div');
+                const region = document.createElement('span');
+                const time = document.createElement('span');
+                const message = document.createElement('div');
+
+                newsBlock.append(blockHeader, message);
+                blockHeader.append(region, time);
+
+                newsBlock.classList.add('news-block');
+                blockHeader.classList.add('block-header', `type-${n.type}`);
+                region.classList.add('region');
+                time.classList.add('time');
+                message.classList.add('message');
+
+                region.innerText = n.region;
+                time.innerText = formatTime(n.time);
+                if (n.message) {
+                    const p = document.createElement('p');
+                    p.innerText = n.message;
+                    message.append(p);
+                } else if (n.messages) {
+                    n.messages.forEach(m => {
+                        const p = document.createElement('p');
+                        p.innerText = m;
+                        message.append(p);
+                    });              
+                }
+
+                nEls.push(newsBlock);
+            });
+        }
+
+        statusList.append(...sEls);
+
+        const loadHandler = function() {
+            const queue = nEls.splice(0, 5);
+            newsList.append(...queue);
+
+            if (nEls.length <= 0) {
+                loadMore.remove();
+            }
+        };
+
+        loadMore.onclick = loadHandler;
+        loadHandler();
     };
 
     const xhr = new XMLHttpRequest();
 
     xhr.addEventListener('load', function (ev) {
         const res = JSON.parse(this.responseText);
-        render(res.status);
+        render(res);
     });
 
-    xhr.open('GET', `https://status-api.apernet.io/status.json?v=${Date.now()}`);
+    // xhr.open('GET', `https://status-api.apernet.io/status.json?v=${Date.now()}`);
+    xhr.open('GET', `/status.json?v=${Date.now()}`);
     xhr.send();
 })();
